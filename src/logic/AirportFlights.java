@@ -1,11 +1,15 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -110,8 +114,8 @@ public class AirportFlights {
 			  			  }
 			  		  }
 			  		  
-			  		saveFlight("Brno", possibleDestinations, possibleCountries, possibleAirlines);
-			  		*/
+			  		saveFlight("Brno", possibleDestinations, possibleCountries, possibleAirlines);*/
+			  		
 			  		//destinations from Ostrava
 			  		driver.get(getLink("OSR"));
 			  		destinationsOstrava = new OstravaDestinations(driver);
@@ -119,11 +123,23 @@ public class AirportFlights {
 			  		WebElement departuresRadioButton = driver.findElement(destinationsOstrava.getDeparturesXpath());
 			  		departuresRadioButton.click();
 			  		
-			  		WebElement interval = driver.findElement(destinationsOstrava.getInterval1MonthXpath());
+			  		WebElement intervalSelectBox = driver.findElement(destinationsOstrava.getIntervalSelectboxXpath());
+			  		intervalSelectBox.click();
+			  			  		
+			  		WebDriverWait wait = new WebDriverWait(driver, 1);			  		
+			  		WebElement interval = wait.until((ExpectedConditions.elementToBeClickable(destinationsOstrava.getInterval1MonthXpath()))); 
 			  		interval.click();
 			  		
 			  		WebElement searchButton = driver.findElement(destinationsOstrava.getSearchButtonXpath());
 			  		searchButton.click();
+			  		
+			  		HashMap<String, String> ostravaAirlines = destinationsOstrava.getAirlines(driver);
+			  		
+			  		List<WebElement> destinationsOSR =  destinationsOstrava.getWebElements(destinationsOstrava.getDestinationXpath());
+			  		List<WebElement> airlinesOSR = destinationsOstrava.getWebElements(destinationsOstrava.getAirlineXpath());
+			  		
+			  		List<WebElement> flightsOSR = sortFlights(destinationsOSR, airlinesOSR);
+			  					  	
 		  } 
 	  }
 	  
