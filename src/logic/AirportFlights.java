@@ -84,7 +84,7 @@ public class AirportFlights {
 		  			  possibleCountries = destinationsPrague.getWebElements(destinationsPrague.getCountriesXpath());
 		  			  possibleAirlines = destinationsPrague.getWebElements(destinationsPrague.getAirlinesXpath());
 		  			  
-		  			  saveFlight("Prague", possibleDestinations, possibleCountries, possibleAirlines);
+		  			  saveFlight("Prague", possibleCountries, possibleDestinations, possibleAirlines);
 		  			 
 		  			 
 		  			  //destinations from Brno
@@ -113,7 +113,7 @@ public class AirportFlights {
 			  			  }
 			  		  }
 			  		  
-			  		saveFlight("Brno", possibleDestinations, possibleCountries, possibleAirlines);
+			  		saveFlight("Brno", possibleCountries, possibleDestinations, possibleAirlines);
 
 			  		//destinations from Ostrava
 			  		driver.get(getLink("OSR"));
@@ -147,7 +147,7 @@ public class AirportFlights {
 			  			}
 			  		}
 			  		
-			  		saveFlight("Ostrava", possibleDestinations, possibleCountries, possibleAirlines, ostravaAirlines);
+			  		saveFlight("Ostrava", possibleCountries, possibleDestinations, possibleAirlines, ostravaAirlines);
 			  					  	
 		  } 
 	  }
@@ -232,9 +232,9 @@ public class AirportFlights {
 		  for(int i=0; i < destinations.size(); i++){			  
 			  destination = destinations.get(i).getText();	
 			  
-			  String airlinesString[] = airlines.get(i).getText().split(",");			  
+			  String airlinesString[] = airlines.get(i).getText().replaceAll("\\s", "").split(",");			  
 			  for(String airlineString : airlinesString){
-				  airline = (String) ostravaAirlines.get(airlineString.substring(0, 2));		  
+ 				  airline = (String) ostravaAirlines.get(airlineString.substring(0, 2));
 				  String[] toWrite = {airport, destination, country, airline};
 				  ExcelUtils.writeData(toWrite, "Czech Republic");
 			  }
