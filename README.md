@@ -2,7 +2,7 @@
 Application built on [Selenium WebDriver](http://www.seleniumhq.org/) for finding flight fares depending on user conditions
 
 ### All Possible Flights From
-** Czechia **
+**Czechia**
 - Prague (Václav Havel airport) - IATA CODE: PRG
 - Brno (Turany international airport) - IATA CODE: BRQ
 - Ostrava (Leoš Janáček airport) - IATA CODE: OSR
