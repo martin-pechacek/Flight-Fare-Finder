@@ -19,12 +19,15 @@ import pages.airports.OstravaDestinations;
 import pages.airports.PragueDestinations;
 import utility.ExcelUtils;
 
-public class AirportFlights {
+public class FlightsCZ {
 	WebDriver driver;
 	private static final String CHROME_DRIVER = System.getProperty("user.dir")+"//src//utility//chromedriver.exe";
 	private PragueDestinations destinationsPrague;
 	private BrnoDestinations destinationsBrno;
 	private OstravaDestinations destinationsOstrava;
+	List<WebElement> possibleDestinations = new ArrayList<>();
+	List<WebElement> possibleCountries = new ArrayList<>();
+	List<WebElement> possibleAirlines = new ArrayList<>();
 	
 	
 	  @BeforeTest
@@ -59,97 +62,96 @@ public class AirportFlights {
 	  }
 	  
 	  /**
-	   * Method which loads all possible destinations, countries and airline 
-	   * and store it in the List<WebElement>
-	   * 
-	   * @param countryCode
+	   * Test method which loads all possible destinations, countries and airlines
+	   * from Prague airport and save it in the excel file 
 	   * @throws Exception 
 	   */
-	  @Test
-	  public void getDestinations() throws Exception{	 
-		  List<WebElement> possibleDestinations = new ArrayList<>();
-		  List<WebElement> possibleCountries = new ArrayList<>();
-		  List<WebElement> possibleAirlines = new ArrayList<>();
-		  
-		  String countryCode = "cz";
-		  
-		  switch(countryCode){
-		  			case "cz":		
-		  			  //destinations from Prague
-		  			  destinationsPrague = new PragueDestinations(driver);
-		  			  
-		  			  driver.get(getLink("PRG"));
-		  			  
-		  			  possibleDestinations = destinationsPrague.getWebElements(destinationsPrague.getDestinationsXpath());
-		  			  possibleCountries = destinationsPrague.getWebElements(destinationsPrague.getCountriesXpath());
-		  			  possibleAirlines = destinationsPrague.getWebElements(destinationsPrague.getAirlinesXpath());
-		  			  
-		  			  saveFlight("Prague", possibleCountries, possibleDestinations, possibleAirlines);
-		  			 
-		  			 
-		  			  //destinations from Brno
-		  			  driver.get(getLink("BRQ"));
-		  			  destinationsBrno = new BrnoDestinations(driver);
-		  			  
-		  			  WebElement arrivalCheckbox = driver.findElement(destinationsBrno.getArrivalsXpath());
-		  			  arrivalCheckbox.click();
-		  			  
-		  			  WebElement interval = driver.findElement(destinationsBrno.getInterval1MonthXpath());
-		  			  interval.click();
-		  			  
-		  			  WebElement searchButton = driver.findElement(destinationsBrno.getSearchButtonXpath());
-			  		  searchButton.click();
-			  		  
-			  		  List<WebElement> destinationsBRQ =  destinationsBrno.getWebElements(destinationsBrno.getDestinationsXpath());
-			  		  List<WebElement> airlinesBRQ = destinationsBrno.getWebElements(destinationsBrno.getAirlinesXpath());
-			  		  
-			  		  List<WebElement> flightsBRQ = sortFlights(destinationsBRQ, airlinesBRQ);
-			  		  
-			  		  for(int i=0; i < flightsBRQ.size(); i++){
-			  			  if( (i+1)%2 == 0){
-			  				  possibleAirlines.add(flightsBRQ.get(i));
-			  			  } else {
-			  				  possibleDestinations.add(flightsBRQ.get(i));  
-			  			  }
-			  		  }
-			  		  
-			  		saveFlight("Brno", possibleCountries, possibleDestinations, possibleAirlines);
-
-			  		//destinations from Ostrava
-			  		driver.get(getLink("OSR"));
-			  		destinationsOstrava = new OstravaDestinations(driver);
+	  @Test(priority = 0)
+	  public void pragueFlights() throws Exception{
+			  destinationsPrague = new PragueDestinations(driver);
+  			  
+			  driver.get(getLink("PRG"));
+			  
+			  possibleDestinations = destinationsPrague.getWebElements(destinationsPrague.getDestinationsXpath());
+			  possibleCountries = destinationsPrague.getWebElements(destinationsPrague.getCountriesXpath());
+			  possibleAirlines = destinationsPrague.getWebElements(destinationsPrague.getAirlinesXpath());
+			  
+			  saveFlight("Prague", possibleCountries, possibleDestinations, possibleAirlines);
+	  }
+	  
+	  /**
+	   * Test method which loads all possible destinations, countries and airlines
+	   * from Brno airport and save it in the excel file 
+	   * @throws Exception 
+	   */
+	  @Test(priority = 1)
+	  public void brnoFlights() throws Exception{
+		  driver.get(getLink("BRQ"));
+		  destinationsBrno = new BrnoDestinations(driver);
+			  
+		  WebElement arrivalCheckbox = driver.findElement(destinationsBrno.getArrivalsXpath());
+		  arrivalCheckbox.click();
+			  
+		  WebElement interval = driver.findElement(destinationsBrno.getInterval1MonthXpath());
+		  interval.click();
+			  
+		  WebElement searchButton = driver.findElement(destinationsBrno.getSearchButtonXpath());
+  		  searchButton.click();
+  		  
+  		  List<WebElement> destinationsBRQ =  destinationsBrno.getWebElements(destinationsBrno.getDestinationsXpath());
+  		  List<WebElement> airlinesBRQ = destinationsBrno.getWebElements(destinationsBrno.getAirlinesXpath());
+  		  
+  		  List<WebElement> flightsBRQ = sortFlights(destinationsBRQ, airlinesBRQ);
+  		  
+  		  for(int i=0; i < flightsBRQ.size(); i++){
+  			  if( (i+1)%2 == 0){
+  				  possibleAirlines.add(flightsBRQ.get(i));
+  			  } else {
+  				  possibleDestinations.add(flightsBRQ.get(i));  
+  			  }
+  		  }
+  		  
+  		saveFlight("Brno", possibleCountries, possibleDestinations, possibleAirlines);
+	  }
+	  
+	  /**
+	   * Test method which loads all possible destinations, countries and airlines
+	   * from Ostrava airport and save it in the excel file 
+	   * @throws Exception 
+	   */
+	  @Test(priority = 2)
+	  public void ostravaFlights() throws Exception{
+		  driver.get(getLink("OSR"));
+		  destinationsOstrava = new OstravaDestinations(driver);
+		
+		  WebElement departuresRadioButton = driver.findElement(destinationsOstrava.getDeparturesXpath());
+		  departuresRadioButton.click();
+		
+		  WebElement intervalSelectBox = driver.findElement(destinationsOstrava.getIntervalSelectboxXpath());
+		  intervalSelectBox.click();
 			  		
-			  		WebElement departuresRadioButton = driver.findElement(destinationsOstrava.getDeparturesXpath());
-			  		departuresRadioButton.click();
-			  		
-			  		WebElement intervalSelectBox = driver.findElement(destinationsOstrava.getIntervalSelectboxXpath());
-			  		intervalSelectBox.click();
-			  			  		
-			  		WebDriverWait wait = new WebDriverWait(driver, 1);			  		
-			  		interval = wait.until((ExpectedConditions.elementToBeClickable(destinationsOstrava.getInterval1MonthXpath()))); 
-			  		interval.click();
-			  		
-			  		searchButton = driver.findElement(destinationsOstrava.getSearchButtonXpath());
-			  		searchButton.click();
-			  		
-			  		HashMap<String, String> ostravaAirlines = destinationsOstrava.getAirlines(driver);
-			  		
-			  		List<WebElement> destinationsOSR =  destinationsOstrava.getWebElements(destinationsOstrava.getDestinationXpath());
-			  		List<WebElement> airlinesOSR = destinationsOstrava.getWebElements(destinationsOstrava.getAirlineXpath());
-			  					  		
-			  		List<WebElement> flightsOSR = sortFlights(destinationsOSR, airlinesOSR);
-			  		
-			  		for(int i = 0; i<flightsOSR.size();i++){
-			  			if((i+1)%2 == 0){
-			  				possibleAirlines.add(flightsOSR.get(i));
-			  			} else {
-			  				possibleDestinations.add(flightsOSR.get(i));
-			  			}
-			  		}
-			  		
-			  		saveFlight("Ostrava", possibleCountries, possibleDestinations, possibleAirlines, ostravaAirlines);
-			  					  	
-		  } 
+		  WebDriverWait wait = new WebDriverWait(driver, 1);			  		
+		  WebElement interval = wait.until((ExpectedConditions.elementToBeClickable(destinationsOstrava.getInterval1MonthXpath()))); 
+		  interval.click();
+		
+		  WebElement searchButton = driver.findElement(destinationsOstrava.getSearchButtonXpath());
+		  searchButton.click();
+		
+		  HashMap<String, String> ostravaAirlines = destinationsOstrava.getAirlines(driver);
+		
+		  List<WebElement> destinationsOSR =  destinationsOstrava.getWebElements(destinationsOstrava.getDestinationXpath());
+		  List<WebElement> airlinesOSR = destinationsOstrava.getWebElements(destinationsOstrava.getAirlineXpath());
+					  		
+		  List<WebElement> flightsOSR = sortFlights(destinationsOSR, airlinesOSR);
+		
+		  for(int i = 0; i<flightsOSR.size();i++){
+			  if((i+1)%2 == 0){
+				  possibleAirlines.add(flightsOSR.get(i));
+			  } else {
+				  possibleDestinations.add(flightsOSR.get(i));
+			  }
+		  }		
+		  saveFlight("Ostrava", possibleCountries, possibleDestinations, possibleAirlines, ostravaAirlines);
 	  }
 	  
 	  /**
