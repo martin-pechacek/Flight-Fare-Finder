@@ -1,8 +1,14 @@
 package pages.airlines;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Wizzair {
 	private String link = "https://wizzair.com/en-gb/information-and-services/destinations/timetable";
@@ -61,14 +67,14 @@ public class Wizzair {
 	 * @return price
 	 */
 	public int getPrice(){
-		boolean isPriceDisplayed = driver.findElement(priceSelectorFromOrigin).isDisplayed();
+		boolean isPriceDisplayed = driver.findElements(priceSelectorFromOrigin).size() > 0;
 		int price;
 		
+		driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+		
 		if(isPriceDisplayed){
-			String priceString = driver.findElement(priceSelectorFromOrigin).getText();
-			
-			priceString = priceString.replaceAll(",", "").substring(2);
-			
+			String priceString = driver.findElement(priceSelectorFromOrigin).getText();			
+			priceString = priceString.replaceAll(",", "").substring(2);			
 			price = Integer.parseInt(priceString);	
 		} else {
 			price = 1000000;

@@ -70,7 +70,7 @@ public class Finder {
 				WebElement searchButton = driver.findElement(wizzair.getSearchButton());
 				searchButton.click();
 				
-				WebDriverWait wait = new WebDriverWait(driver, 5);			  		
+				WebDriverWait wait = new WebDriverWait(driver, 10);			  		
 				WebElement selectBox = wait.until((ExpectedConditions.elementToBeClickable(wizzair.getMonthSelectbox()))); 
 				selectBox.click();
 				
@@ -82,10 +82,10 @@ public class Finder {
 					wait.until((ExpectedConditions.numberOfElementsToBeLessThan(wizzair.getLoader(), 1))); 
 					selectBox.click();
 					
-					WebElement month = wait.until((ExpectedConditions.elementToBeClickable(months.get(i+1))));
+					WebElement month = wait.until((ExpectedConditions.elementToBeClickable(months.get(i))));
 					month.click();
 					
-					if(price < wizzair.getPrice()){
+					if(price > wizzair.getPrice()){
 						price = wizzair.getPrice();
 					}
 				}
