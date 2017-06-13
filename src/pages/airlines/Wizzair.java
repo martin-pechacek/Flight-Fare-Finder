@@ -10,9 +10,10 @@ public class Wizzair {
 	By originInput = By.id("search-departure-station");
 	By destinationInput = By.id("search-arrival-station");
 	By searchButton = By.cssSelector(".button.button--large.button--block.button--filled");
-	By price = By.cssSelector("fare-finder__calendar__monthly-prices__price.fare-finder__calendar__monthly-prices__price--minimum.title.title--2");
+	By priceSelectorFromOrigin = By.xpath("//*[@id='app']/div[3]/div/main/div/div/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]");
 	By monthSelectboxFromOrigin = By.xpath("//*[@id='app']/div[3]/div/main/div/div/div[2]/div[2]/div[1]/div[1]/div/select");
 	By monthsFromOriginSelectbox = By.xpath("//*[@id='app']/div[3]/div/main/div/div/div[2]/div[2]/div[1]/div[1]/div/select/option");
+	By loader = By.xpath("//div[@class='fare-finder__calendar box loader-combined']");
 	
 	public Wizzair(WebDriver driver){
 		this.driver = driver;
@@ -55,13 +56,24 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that returns price
+	 * Method that returns price. If flights are not planned yet, method will set price as 1 000 000
 	 * 
 	 * @return price
 	 */
-	public String getPrice(){
-		String priceString = driver.findElement(price).getText();
-		return priceString;
+	public int getPrice(){
+		boolean isPriceDisplayed = driver.findElement(priceSelectorFromOrigin).isDisplayed();
+		int price;
+		
+		if(isPriceDisplayed){
+			String priceString = driver.findElement(priceSelectorFromOrigin).getText();
+			
+			priceString = priceString.replaceAll(",", "").substring(2);
+			
+			price = Integer.parseInt(priceString);	
+		} else {
+			price = 1000000;
+		}		
+		return price;
 	}
 	
 	/**
@@ -80,5 +92,14 @@ public class Wizzair {
 	 */
 	public By getMonthsFromSelectbox(){
 		return monthsFromOriginSelectbox;
+	}
+	
+	/**
+	 * Method that provides xpath of loading icon
+	 * 
+	 * @return loader
+	 */
+	public By getLoader(){
+		return loader;
 	}
 }

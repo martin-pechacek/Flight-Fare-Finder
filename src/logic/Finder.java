@@ -1,6 +1,7 @@
 package logic;
 
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -34,8 +35,9 @@ public class Finder {
 	public void findFlight(){
 		String airline = "wizz";    //HARDCODED!!!!
 		String from = "prague";     //HARDCODED!!!!
-		String to = "Reykjavik";       //HARDCODED!!!!
+		String to = "Reykjavik";    //HARDCODED!!!!
 		int limit = 400;            //HARDCODED!!!!
+		int price;
 		
 		switch(airline){
 			case("ryanair"):
@@ -49,11 +51,9 @@ public class Finder {
 				WebElement departureCity = driver.findElement(ryanair.getDepartureCity(from));
 				departureCity.click();
 				
-				int price =  Integer.parseInt(ryanair.getFlightPrice(to));
+				price =  Integer.parseInt(ryanair.getFlightPrice(to));
 				
-				if(price<=limit){
-					assertFalse(true);
-				}				
+				assertTrue(controlPrice(price, limit));
 				break;
 			case("wizz"):
 				Wizzair wizzair = new Wizzair(driver);
@@ -74,16 +74,45 @@ public class Finder {
 				WebElement selectBox = wait.until((ExpectedConditions.elementToBeClickable(wizzair.getMonthSelectbox()))); 
 				selectBox.click();
 				
+				price = wizzair.getPrice();
+				
 				List<WebElement> months = driver.findElements(wizzair.getMonthsFromSelectbox());
 				
-				for(int i=0; i<12; i++){
-					driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+				for(int i=0; i<months.size(); i++){
+					wait.until((ExpectedConditions.numberOfElementsToBeLessThan(wizzair.getLoader(), 1))); 
 					selectBox.click();
 					
 					WebElement month = wait.until((ExpectedConditions.elementToBeClickable(months.get(i+1))));
 					month.click();
+					
+					if(price < wizzair.getPrice()){
+						price = wizzair.getPrice();
+					}
 				}
+				
+				assertTrue(controlPrice(price, limit));
+				
+				break;
 		}
+	}
+	
+	/**
+	 * Method returning true of false value depending on 
+	 * price and limit set by user
+	 * 
+	 * true - price is higher than limit
+	 * false - price is lower than limit
+	 * 
+	 * @param price
+	 * @param limit
+	 * @return true/false
+	 */
+	private boolean controlPrice(int price, int limit){
+		if(price<=limit){
+			return false;
+		} else {
+			return true;
+		}				
 	}
 	
 	@AfterTest
