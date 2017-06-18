@@ -188,7 +188,7 @@ public class FlightsCZ {
 	   *  
 	   * @throws Exception
 	   */
-	  public void saveFlight(String airport, List<WebElement> destinations, List<WebElement> countries, List<WebElement> airlines) throws Exception{				  		  
+	  public void saveFlight(String originCity, List<WebElement> destinations, List<WebElement> countries, List<WebElement> airlines) throws Exception{				  		  
 		  String destination;
 		  String country;
 		  String airline;		  
@@ -204,8 +204,8 @@ public class FlightsCZ {
 			  
 			  airline = airlines.get(i).getText();
 			  
-			  String[] toWrite = {airport, destination, country, airline};		  
-			  ExcelUtils.writeData(toWrite, "Czech Republic");
+			  String[] toWrite = {originCity, destination, country, airline};		  
+			  ExcelUtils.writeData(toWrite, originCity);
   		  }
 		  
 		  destinations.clear();

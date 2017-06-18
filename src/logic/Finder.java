@@ -1,10 +1,10 @@
 package logic;
 
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -15,10 +15,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import pages.airlines.Ryanair;
 import pages.airlines.Wizzair;
+import utility.ExcelUtils;
 
 public class Finder {
 	WebDriver driver;
@@ -32,67 +34,68 @@ public class Finder {
 	}
 	
 	@Test
-	public void findFlight(){
-		String airline = "wizz";    //HARDCODED!!!!
-		String from = "prague";     //HARDCODED!!!!
-		String to = "Reykjavik";    //HARDCODED!!!!
-		int limit = 400;            //HARDCODED!!!!
+	@Parameters({"from", "to", "priceLimit"})
+	public void findFlight(String from, String to, int priceLimit) throws InterruptedException, IOException{
 		int price;
 		
-		switch(airline){
-			case("ryanair"):
-				Ryanair ryanair = new Ryanair(driver);
-				driver.get(ryanair.getWebpage());
-				
-				WebElement fromSelectBox = driver.findElement(ryanair.getFromSelectbox());
-				JavascriptExecutor executor = (JavascriptExecutor) driver;
-				executor.executeScript("arguments[0].click()", fromSelectBox);
-				
-				WebElement departureCity = driver.findElement(ryanair.getDepartureCity(from));
-				departureCity.click();
-				
-				price =  Integer.parseInt(ryanair.getFlightPrice(to));
-				
-				assertTrue(controlPrice(price, limit));
-				break;
-			case("wizz"):
-				Wizzair wizzair = new Wizzair(driver);
-				driver.get(wizzair.getWebpage());
-				
-				WebElement originInput = driver.findElement(wizzair.getOriginInput());
-				originInput.sendKeys(from);
-				originInput.sendKeys(Keys.TAB);
-				
-				WebElement destinationInput = driver.findElement(wizzair.getDestinationInput());
-				destinationInput.sendKeys(to);
-				destinationInput.sendKeys(Keys.TAB);
-				
-				WebElement searchButton = driver.findElement(wizzair.getSearchButton());
-				searchButton.click();
-				
-				WebDriverWait wait = new WebDriverWait(driver, 10);			  		
-				WebElement selectBox = wait.until((ExpectedConditions.elementToBeClickable(wizzair.getMonthSelectbox()))); 
-				selectBox.click();
-				
-				price = wizzair.getPrice();
-				
-				List<WebElement> months = driver.findElements(wizzair.getMonthsFromSelectbox());
-				
-				for(int i=0; i<months.size(); i++){
-					wait.until((ExpectedConditions.numberOfElementsToBeLessThan(wizzair.getLoader(), 1))); 
+		List<String> airlines = getAirlines(from, to);
+		
+		for(String airline : airlines){			
+			switch(airline.toLowerCase()){
+				case("ryanair"):
+					Ryanair ryanair = new Ryanair(driver);
+					driver.get(ryanair.getWebpage());
+					
+					WebElement fromSelectBox = driver.findElement(ryanair.getFromSelectbox());
+					JavascriptExecutor executor = (JavascriptExecutor) driver;
+					executor.executeScript("arguments[0].click()", fromSelectBox);
+					
+					WebElement departureCity = driver.findElement(ryanair.getDepartureCity(from));
+					departureCity.click();
+					
+					price =  Integer.parseInt(ryanair.getFlightPrice(to));
+					
+					assertTrue(controlPrice(price, priceLimit));
+					break;
+				case("wizz air"):				
+					Wizzair wizzair = new Wizzair(driver);
+					driver.get(wizzair.getWebpage());
+					
+					WebElement originInput = driver.findElement(wizzair.getOriginInput());
+					originInput.sendKeys(from);
+					originInput.sendKeys(Keys.TAB);
+					
+					WebElement destinationInput = driver.findElement(wizzair.getDestinationInput());
+					destinationInput.sendKeys(to);
+					destinationInput.sendKeys(Keys.TAB);
+					
+					WebElement searchButton = driver.findElement(wizzair.getSearchButton());
+					searchButton.click();
+					
+					WebDriverWait wait = new WebDriverWait(driver, 30);			  		
+					WebElement selectBox = wait.until((ExpectedConditions.elementToBeClickable(wizzair.getMonthSelectbox()))); 
 					selectBox.click();
 					
-					WebElement month = wait.until((ExpectedConditions.elementToBeClickable(months.get(i))));
-					month.click();
+					price = wizzair.getPrice();
 					
-					if(price > wizzair.getPrice()){
-						price = wizzair.getPrice();
+					List<WebElement> months = driver.findElements(wizzair.getMonthsFromSelectbox());
+					
+					for(int i=0; i<months.size(); i++){
+						wait.until((ExpectedConditions.numberOfElementsToBeLessThan(wizzair.getLoader(), 1))); 
+						selectBox.click();
+						
+						WebElement month = wait.until((ExpectedConditions.elementToBeClickable(months.get(i))));
+						month.click();
+						
+						if(price > wizzair.getPrice()){
+							price = wizzair.getPrice();
+						}
 					}
-				}
-				
-				assertTrue(controlPrice(price, limit));
-				
-				break;
+					
+					assertTrue(controlPrice(price, priceLimit));
+					
+					break;
+			}
 		}
 	}
 	
@@ -113,6 +116,20 @@ public class Finder {
 		} else {
 			return true;
 		}				
+	}
+	
+	/**
+	 * Method providing list of airlines which flights from origin city to destinations
+	 * 
+	 * @param originCity
+	 * @param destination
+	 * @return airlines
+	 * @throws IOException
+	 */
+	private List<String> getAirlines(String originCity, String destination) throws IOException{
+		ArrayList<String> airlines = new ArrayList<>();
+		airlines = ExcelUtils.readAirlines(originCity, destination);
+		return airlines;
 	}
 	
 	@AfterTest
