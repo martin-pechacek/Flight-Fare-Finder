@@ -24,12 +24,12 @@ public class ExcelUtils {
 	 * @param value - Value for writing in the excel file
 	 * @throws Exception
 	 */
-	public static void writeData(String[] value, String originCity) throws Exception {
+	public static void writeData(String[] value) throws Exception {
 		try {
 			
 			File file = new File(EXCEL_PATH);
 			
-			City city = new City(originCity);
+			City city = new City(value[0]);
 			
 			FileInputStream inputStream = new FileInputStream(file);
 			
@@ -42,8 +42,6 @@ public class ExcelUtils {
 			Row row = excelSheet.getRow(0);
 			
 			Row newRow = excelSheet.createRow(rowCount + 1);
-			
-			int test = row.getLastCellNum();
 			
 			for(int i=0; i < row.getLastCellNum(); i++) {
 				Cell excelCell = newRow.createCell(i);
@@ -89,12 +87,14 @@ public class ExcelUtils {
 	    for (int i = 0; i < rowCount+1; i++) {
 	        Row row = excelSheet.getRow(i);
 	        String excelFrom = row.getCell(0).getStringCellValue().toLowerCase();
-	        String excelTo = row.getCell(2).getStringCellValue().toLowerCase();
+	        String excelTo = row.getCell(1).getStringCellValue().toLowerCase();
 	                	        
         	if(excelFrom.contains(originCity.toLowerCase()) && excelTo.contains(destination.toLowerCase())){       		
         		airlines.add(row.getCell(3).getStringCellValue());
         	}
 	    }
+	    
+	    excelBook.close();
 	    
 	    return airlines;
 	}

@@ -4,7 +4,7 @@
   
   <test name="fLIGHTS loader" >
     <classes>
-      <class name="logic.FlightsCZ"/>
+      <class name="logic.FlightsCZ" />
     </classes>
   </test> 
 

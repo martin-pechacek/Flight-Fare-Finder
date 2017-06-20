@@ -11,13 +11,13 @@
 	  </classes>
   </test> 
   
-  <test name="Prague -> Milan" >
+ <!-- <test name="Prague -> Milan" >
 	  <parameter name="from" value="Prague"/>
 	  <parameter name="to" value="Milan"/>
 	  <parameter name="priceLimit" value="250"/>
 	  <classes>
 	      <class name="logic.Finder"/>
 	  </classes>
-  </test> 
+  </test> -->
 
 </suite> <!-- Default suite -->

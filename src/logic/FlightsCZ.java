@@ -76,7 +76,7 @@ public class FlightsCZ {
 			  possibleCountries = destinationsPrague.getWebElements(destinationsPrague.getCountriesXpath());
 			  possibleAirlines = destinationsPrague.getWebElements(destinationsPrague.getAirlinesXpath());
 			  
-			  saveFlight("Prague", possibleCountries, possibleDestinations, possibleAirlines);
+			  saveFlight("Prague", possibleDestinations, possibleCountries, possibleAirlines);
 	  }
 	  
 	  /**
@@ -111,7 +111,7 @@ public class FlightsCZ {
   			  }
   		  }
   		  
-  		saveFlight("Brno", possibleCountries, possibleDestinations, possibleAirlines);
+  		saveFlight("Brno", possibleDestinations, possibleCountries, possibleAirlines);
 	  }
 	  
 	  /**
@@ -151,15 +151,15 @@ public class FlightsCZ {
 				  possibleDestinations.add(flightsOSR.get(i));
 			  }
 		  }		
-		  saveFlight("Ostrava", possibleCountries, possibleDestinations, possibleAirlines, ostravaAirlines);
+		  saveFlight("Ostrava", possibleDestinations, possibleCountries, possibleAirlines, ostravaAirlines);
 	  }
 	  
 	  /**
-	   * Method for sorting same flights in the list.
+	   * Method for sorting flights in the list.
 	   * Used in case when airport doesn't provide
-	   * information about all possible flights. And has to be
+	   * information about all possible flights on one page.
 	   * 
-	   * Sorted flights are in list saved in 
+	   * Sorted flights in the list are in 
 	   * structure - every odd - destination, every even - airline
 	   * used ordinary flight search. e.g. Brno 
 	   */
@@ -181,7 +181,7 @@ public class FlightsCZ {
 	 }
 	  
 	  /**
-	   * Method used for saving possible flights from airport (except Ostrava)
+	   * Method for saving all possible flights from airport (except Ostrava)
 	   * in the excel file
 	   * 
 	   * Excel file structure: departure airport|city of arrival|country of arrival|airline
@@ -205,7 +205,7 @@ public class FlightsCZ {
 			  airline = airlines.get(i).getText();
 			  
 			  String[] toWrite = {originCity, destination, country, airline};		  
-			  ExcelUtils.writeData(toWrite, originCity);
+			  ExcelUtils.writeData(toWrite);
   		  }
 		  
 		  destinations.clear();
@@ -226,7 +226,7 @@ public class FlightsCZ {
 	 * @param ostravaAirlines
 	 * @throws Exception
 	 */
-	  public void saveFlight(String airport, List<WebElement> destinations, List<WebElement> countries, List<WebElement> airlines, HashMap<String, String> ostravaAirlines) throws Exception{				  		  
+	  public void saveFlight(String originCity, List<WebElement> destinations, List<WebElement> countries, List<WebElement> airlines, HashMap<String, String> ostravaAirlines) throws Exception{				  		  
 		  String destination;
 		  String country = "";
 		  String airline;
@@ -237,8 +237,8 @@ public class FlightsCZ {
 			  String airlinesString[] = airlines.get(i).getText().replaceAll("\\s", "").split(",");			  
 			  for(String airlineString : airlinesString){
  				  airline = (String) ostravaAirlines.get(airlineString.substring(0, 2));
-				  String[] toWrite = {airport, destination, country, airline};
-				  ExcelUtils.writeData(toWrite, "Czech Republic");
+				  String[] toWrite = {originCity, destination, country, airline};
+				  ExcelUtils.writeData(toWrite);
 			  }
   		  }
 		  
@@ -248,8 +248,8 @@ public class FlightsCZ {
 	  }
 	  
 	  @AfterTest
-		public void teardown(){
-			driver.close();
-		}
+	  public void teardown(){
+		  driver.close();
+	  }
 	  
 }

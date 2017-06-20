@@ -11,6 +11,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
@@ -37,6 +38,8 @@ public class Finder {
 	@Parameters({"from", "to", "priceLimit"})
 	public void findFlight(String from, String to, int priceLimit) throws InterruptedException, IOException{
 		int price;
+		WebElement searchButton;
+		WebDriverWait wait = new WebDriverWait(driver, 30);	
 		
 		List<String> airlines = getAirlines(from, to);
 		
@@ -46,16 +49,28 @@ public class Finder {
 					Ryanair ryanair = new Ryanair(driver);
 					driver.get(ryanair.getWebpage());
 					
-					WebElement fromSelectBox = driver.findElement(ryanair.getFromSelectbox());
-					JavascriptExecutor executor = (JavascriptExecutor) driver;
-					executor.executeScript("arguments[0].click()", fromSelectBox);
+					Actions action = new Actions(driver);
 					
+					WebElement fromInput = wait.until((ExpectedConditions.elementToBeClickable(ryanair.getFromInputXpath())));
+					action.doubleClick(fromInput).build().perform();
+					fromInput.sendKeys(from);
+					fromInput.sendKeys(Keys.ENTER);
+					
+					WebElement toInput = wait.until((ExpectedConditions.elementToBeClickable(ryanair.getToInputXpath())));
+					toInput.click();
+					toInput.sendKeys(to);
+					toInput.sendKeys(Keys.ENTER);
+									
+					WebElement allResults = wait.until((ExpectedConditions.elementToBeClickable(ryanair.getAllResults())));
+					allResults.click();
+					
+					/*
 					WebElement departureCity = driver.findElement(ryanair.getDepartureCity(from));
 					departureCity.click();
 					
 					price =  Integer.parseInt(ryanair.getFlightPrice(to));
 					
-					assertTrue(controlPrice(price, priceLimit));
+					assertTrue(controlPrice(price, priceLimit));*/
 					break;
 				case("wizz air"):				
 					Wizzair wizzair = new Wizzair(driver);
@@ -69,10 +84,9 @@ public class Finder {
 					destinationInput.sendKeys(to);
 					destinationInput.sendKeys(Keys.TAB);
 					
-					WebElement searchButton = driver.findElement(wizzair.getSearchButton());
+					searchButton = driver.findElement(wizzair.getSearchButton());
 					searchButton.click();
-					
-					WebDriverWait wait = new WebDriverWait(driver, 30);			  		
+						  		
 					WebElement selectBox = wait.until((ExpectedConditions.elementToBeClickable(wizzair.getMonthSelectbox()))); 
 					selectBox.click();
 					

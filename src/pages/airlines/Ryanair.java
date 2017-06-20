@@ -1,14 +1,24 @@
 package pages.airlines;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+
+import javax.swing.text.DateFormatter;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import net.sf.cglib.core.Local;
+
 public class Ryanair {
-	private String link = "https://www.ryanair.com/gb/en/";
+	private String link = "https://www.ryanair.com/gb/en/cheap-flight-destinations";
 	WebDriver driver;
-	By FromSelectbox = By.xpath("//span[contains(@ng-click,'vmAirportSelector')]");	
+	By fromInput = By.xpath("//*[@id='route-map-widget']/searchbox-widget/div/div/div[1]/div[1]/input");
+	By toInput = By.xpath("//*[@id='route-map-widget']/searchbox-widget/div/div/div[1]/div[2]/input");
+	By nextMonth = By.xpath("//*[@id='row-dates-pax']/div[1]/div/div[1]/div/div[3]/div/div/div[2]/popup-content/core-datepicker/div/div[1]/ul/li[2]/ul[2]/li[6]/span");
+	By allResults = By.xpath("/html/body/div[2]/main/div/farefinder-card/div/div/farefinder-card-details/div[2]/div[3]/div[2]/button");
 	
 	/**
 	 * Class constructor
@@ -20,7 +30,7 @@ public class Ryanair {
 	}
 	
 	/**
-	 * Method that provides link of airline web page
+	 * Method providing link of airline web page
 	 * 
 	 * @return link
 	 */
@@ -28,30 +38,56 @@ public class Ryanair {
 		return link;
 	}
 	
-	/*
-	 * Method that provides xpath of selectbox for departure airport
+	
+	/**
+	 * Method providing xpath of input field for origin city
+	 * 
+	 * @return fromInput
 	 */
-	public By getFromSelectbox(){
-		return FromSelectbox;
+	public By getFromInputXpath(){
+		return fromInput;
 	}
 	
 	/**
-	 * Method that provides xpath of departure city in the selectbox
+	 * Method providing xpath of input field for destination city
 	 * 
-	 * @param city
-	 * @return city xpath
+	 * @return toInput
 	 */
-	public By getDepartureCity(String city){
-		String capitalizedCity = city.substring(0, 1).toUpperCase() + city.substring(1);
-		By departureAirport = By.xpath("//div[text()[contains(.,'"+ capitalizedCity +"')]]/ancestor::div[contains(@class,'core-list-ref')]");
-		return departureAirport;
+	public By getToInputXpath(){
+		return toInput;
+	}
+	
+	/**
+	 * Method providing xpath of first day of next month in date picker
+	 * 
+	 * @return nextMonth
+	 */
+	public By getNextMonth(){
+		return nextMonth;
+	}
+	
+	/**
+	 * Method providing xpath of search button
+	 * 
+	 * @return nextMonth
+	 */
+	public By getAllResults(){
+		return allResults;
+	}
+	
+	public String actualDate(){
+		LocalDate localDate = LocalDate.now();
+		
+		
+		
+		return null;
 	}
 	
 	/**
 	 * Method providing xpath of flight price
 	 * 
 	 */
-	public String getFlightPrice(String destination){
+	/*public String getFlightPrice(String destination){
 		String circleXpath = "//div[@class='circle']";
 		int count = driver.findElements(By.xpath(circleXpath)).size();
 		String capitalizedDestination = destination.substring(0, 1).toUpperCase() + destination.substring(1);
@@ -65,5 +101,5 @@ public class Ryanair {
 		String price = driver.findElement(priceXpath).getAttribute("innerHTML");
 		
 		return price;
-	}
+	}*/
 }
