@@ -2,6 +2,7 @@ package pages.airlines;
 
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.text.DateFormatter;
 
@@ -19,6 +20,8 @@ public class Ryanair {
 	By toInput = By.xpath("//*[@id='route-map-widget']/searchbox-widget/div/div/div[1]/div[2]/input");
 	By nextMonth = By.xpath("//*[@id='row-dates-pax']/div[1]/div/div[1]/div/div[3]/div/div/div[2]/popup-content/core-datepicker/div/div[1]/ul/li[2]/ul[2]/li[6]/span");
 	By allResults = By.xpath("/html/body/div[2]/main/div/farefinder-card/div/div/farefinder-card-details/div[2]/div[3]/div[2]/button");
+	By months = By.xpath("/html/body/div[2]/main/div/div/div[1]/div[2]/div/div/div[2]/div/ul/li");
+	By priceLabel = By.xpath("/html/body/div[2]/main/div/div/div[1]/div[4]/div/div[1]/div[5]/span");
 	
 	/**
 	 * Class constructor
@@ -74,14 +77,42 @@ public class Ryanair {
 	public By getAllResults(){
 		return allResults;
 	}
-	
-	public String actualDate(){
-		LocalDate localDate = LocalDate.now();
-		
-		
-		
-		return null;
-	}
+
+	/**
+	 * Method providing xpath of months
+	 * 
+	 * @return months
+	 */
+	 public By getMonths(){
+	 	return months;
+	 }
+	 
+	 /**
+	  * Method providing xpath of price label
+	  * 
+	  * @return priceLabel
+	  */
+	 public By getPriceLabelXpath(){
+		 return priceLabel;
+	 }
+	 
+	 /**
+	  * Method providing lowest flight fare in month
+	  * 
+	  * @return price
+	  */
+	 public int getPrice(){		  
+		 int price;		
+		 driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+			
+		 
+		 WebElement priceElement = driver.findElement(priceLabel);
+		 String priceLabel = priceElement.getText().replaceAll(",", "").substring(3);
+		 
+		 price = Integer.parseInt(priceLabel); 
+		 		 
+		 return price;
+	 }
 	
 	/**
 	 * Method providing xpath of flight price

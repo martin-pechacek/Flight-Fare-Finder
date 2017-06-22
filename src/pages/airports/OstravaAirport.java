@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class OstravaDestinations extends Destinations {
+public class OstravaAirport extends Destinations {
 	
 	private String link = "http://www.airport-ostrava.cz/en/page-timetable/";
 	By DeparturesRadioButton = By.xpath("//form[@class='jqtransform jqtransformdone']/table/tbody/tr[1]/td[2]/div[1]//a");
@@ -19,7 +19,7 @@ public class OstravaDestinations extends Destinations {
 	By Destination = By.xpath("//*[@id='tab-1']/table/tbody/tr/td[5]");
 	HashMap<String, String> airlines = new HashMap<String, String>();
 	
-	public OstravaDestinations(WebDriver driver){
+	public OstravaAirport(WebDriver driver){
 		super(driver);
 	}
 	

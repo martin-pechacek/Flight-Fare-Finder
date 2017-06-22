@@ -14,17 +14,17 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import pages.airports.BrnoDestinations;
-import pages.airports.OstravaDestinations;
-import pages.airports.PragueDestinations;
+import pages.airports.BrnoAirport;
+import pages.airports.OstravaAirport;
+import pages.airports.PragueAirport;
 import utility.ExcelUtils;
 
 public class FlightsCZ {
 	WebDriver driver;
 	private static final String CHROME_DRIVER = System.getProperty("user.dir")+"//src//utility//chromedriver.exe";
-	private PragueDestinations destinationsPrague;
-	private BrnoDestinations destinationsBrno;
-	private OstravaDestinations destinationsOstrava;
+	private PragueAirport destinationsPrague;
+	private BrnoAirport destinationsBrno;
+	private OstravaAirport destinationsOstrava;
 	List<WebElement> possibleDestinations = new ArrayList<>();
 	List<WebElement> possibleCountries = new ArrayList<>();
 	List<WebElement> possibleAirlines = new ArrayList<>();
@@ -46,15 +46,15 @@ public class FlightsCZ {
 		  String link = "";
 		  switch(IATACode){
 		  		case "PRG":
-		  			destinationsPrague = new PragueDestinations(driver);
+		  			destinationsPrague = new PragueAirport(driver);
 		  			link = destinationsPrague.getWebpage();
 		  			break;
 		  		case "BRQ":
-		  			destinationsBrno = new BrnoDestinations(driver);
+		  			destinationsBrno = new BrnoAirport(driver);
 		  			link = destinationsBrno.getWebpage();
 		  			break;
 		  		case "OSR":
-		  			destinationsOstrava = new OstravaDestinations(driver);
+		  			destinationsOstrava = new OstravaAirport(driver);
 		  			link = destinationsOstrava.getWebpage();
 		  			break;
 		  }
@@ -68,7 +68,7 @@ public class FlightsCZ {
 	   */
 	  @Test(priority = 0)
 	  public void pragueFlights() throws Exception{
-			  destinationsPrague = new PragueDestinations(driver);
+			  destinationsPrague = new PragueAirport(driver);
   			  
 			  driver.get(getLink("PRG"));
 			  
@@ -87,7 +87,7 @@ public class FlightsCZ {
 	  @Test(priority = 1)
 	  public void brnoFlights() throws Exception{
 		  driver.get(getLink("BRQ"));
-		  destinationsBrno = new BrnoDestinations(driver);
+		  destinationsBrno = new BrnoAirport(driver);
 			  
 		  WebElement arrivalCheckbox = driver.findElement(destinationsBrno.getArrivalsXpath());
 		  arrivalCheckbox.click();
@@ -122,7 +122,7 @@ public class FlightsCZ {
 	  @Test(priority = 2)
 	  public void ostravaFlights() throws Exception{
 		  driver.get(getLink("OSR"));
-		  destinationsOstrava = new OstravaDestinations(driver);
+		  destinationsOstrava = new OstravaAirport(driver);
 		
 		  WebElement departuresRadioButton = driver.findElement(destinationsOstrava.getDeparturesXpath());
 		  departuresRadioButton.click();

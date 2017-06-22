@@ -3,7 +3,7 @@ package pages.airports;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class BrnoDestinations extends Destinations{
+public class BrnoAirport extends Destinations{
 
 	By Arrivals = By.xpath("//label[@class='checkbox_on']");
 	By SearchButton = By.cssSelector("a.submit");
@@ -18,7 +18,7 @@ public class BrnoDestinations extends Destinations{
 	 * 
 	 * @param driver
 	 */
-	public BrnoDestinations(WebDriver driver){
+	public BrnoAirport(WebDriver driver){
 		super(driver);
 	}
 	

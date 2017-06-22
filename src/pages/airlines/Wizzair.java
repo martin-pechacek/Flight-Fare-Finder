@@ -4,11 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Wizzair {
 	private String link = "https://wizzair.com/en-gb/information-and-services/destinations/timetable";
@@ -26,7 +21,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that provides link of airline web page
+	 * Method providing link of airline web page
 	 * 
 	 * @return link
 	 */
@@ -35,7 +30,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that provides id of origin input
+	 * Method providing id of origin input
 	 * 
 	 * @return originInput
 	 */
@@ -44,7 +39,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that provides id of destination input
+	 * Method providing id of destination input
 	 * 
 	 * @return destinationInput
 	 */
@@ -53,7 +48,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that provides css selector of search button
+	 * Method providing css selector of search button
 	 * 
 	 * @return searchButton
 	 */
@@ -62,7 +57,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that returns price. If flights are not planned yet, method will set price as 1 000 000
+	 * Method that returns price. If flights are not planned yet, method will set price 1 000 000
 	 * 
 	 * @return price
 	 */
@@ -83,7 +78,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that  provides xpath of selectbox with months
+	 * Method providing xpath of selectbox with months
 	 * 
 	 * @return monthSelectbox
 	 */
@@ -92,7 +87,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that  provides xpath of month in selectbox
+	 * Method providing xpath of month in selectbox
 	 * 
 	 * @return months
 	 */
@@ -101,7 +96,7 @@ public class Wizzair {
 	}
 	
 	/**
-	 * Method that provides xpath of loading icon
+	 * Method providing xpath of loading icon
 	 * 
 	 * @return loader
 	 */

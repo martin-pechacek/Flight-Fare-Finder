@@ -3,7 +3,7 @@ package pages.airports;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class PragueDestinations extends Destinations {
+public class PragueAirport extends Destinations {
 	WebDriver driver;
 	By Destinations = By.xpath("//div[@class='aero_block']/span[1]");
 	By Country = By.xpath("//div[@class='aero_block']/span[2]");
@@ -16,7 +16,7 @@ public class PragueDestinations extends Destinations {
 	 * 
 	 * @param driver
 	 */
-	public PragueDestinations(WebDriver driver) {
+	public PragueAirport(WebDriver driver) {
 		super(driver);
 	}
 	

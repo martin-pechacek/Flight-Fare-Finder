@@ -5,19 +5,10 @@
   <test name="Ostrava -> Milan" >
 	  <parameter name="from" value="Ostrava"/>
 	  <parameter name="to" value="Milan"/>
-	  <parameter name="priceLimit" value="300"/>
+	  <parameter name="priceLimit" value="200"/>
 	  <classes>
 	      <class name="logic.Finder"/>
 	  </classes>
-  </test> 
+  </test>
   
- <!-- <test name="Prague -> Milan" >
-	  <parameter name="from" value="Prague"/>
-	  <parameter name="to" value="Milan"/>
-	  <parameter name="priceLimit" value="250"/>
-	  <classes>
-	      <class name="logic.Finder"/>
-	  </classes>
-  </test> -->
-
 </suite> <!-- Default suite -->
