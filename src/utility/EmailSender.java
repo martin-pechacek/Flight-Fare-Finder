@@ -2,9 +2,6 @@ package utility;
 
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -23,6 +20,8 @@ public class EmailSender {
 	private static String PASSWORD = "EMAIL_PASSWORD";
 	private static String TO = "EMAIL RECEIVER";
 	private static String HOST = "SMTP_SERVER";
+
+
 	
 	public static void sendEmail(String subject, String body){
 		Properties props = System.getProperties();
@@ -35,7 +34,7 @@ public class EmailSender {
 
 		props.put("mail.smtp.password", PASSWORD);
 
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.port", "25");
 
 		props.put("mail.smtp.auth", "true");
 		
@@ -48,7 +47,6 @@ public class EmailSender {
 			message.setFrom(new InternetAddress(FROM));
 
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(TO));
-
 			
 			message.setSubject(subject);
 
@@ -63,20 +61,6 @@ public class EmailSender {
 			multipart.addBodyPart(objMessageBodyPart);
 
 			objMessageBodyPart = new MimeBodyPart();
-
-			//Set path to the pdf report file
-
-			String filename = System.getProperty("user.dir")+"\\Default test.pdf";
-
-			//Create data source to attach the file in mail
-
-			DataSource source = new FileDataSource(filename);
-
-			objMessageBodyPart.setDataHandler(new DataHandler(source));
-
-			objMessageBodyPart.setFileName(filename);
-
-			multipart.addBodyPart(objMessageBodyPart);
 
 			message.setContent(multipart);
 
