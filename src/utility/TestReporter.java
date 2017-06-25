@@ -16,14 +16,13 @@ public class TestReporter implements ITestListener{
 	public void onTestSuccess(ITestResult result) {
 		// TODO Auto-generated method stub
 		System.out.println("Test Passed->"+result.getMethod().getXmlTest().getName());
-		EmailSender.sendEmail(result.getMethod().getXmlTest().getName(), "Pro let " + result.getMethod().getXmlTest().getName() +
-																		 "byla nalezena nižší cena než" + result.getMethod().getXmlTest().getParameter("priceLimit"));
+		EmailSender.sendEmail(result.getMethod().getXmlTest().getName(), "Pro let <b>" + result.getMethod().getXmlTest().getName() +
+				 "</b> byla u nalezena nižší cena než <b>" + result.getMethod().getXmlTest().getParameter("priceLimit") + "</b>. (viz pøíloha)");
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
 		System.out.println("Test Failed->"+result.getTestName());
-		
 	}
 
 	@Override

@@ -2,6 +2,9 @@ package utility;
 
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -20,8 +23,7 @@ public class EmailSender {
 	private static String PASSWORD = "EMAIL_PASSWORD";
 	private static String TO = "EMAIL RECEIVER";
 	private static String HOST = "SMTP_SERVER";
-
-
+	private static String PORT = "SMTP_PORT";
 	
 	public static void sendEmail(String subject, String body){
 		Properties props = System.getProperties();
@@ -34,7 +36,7 @@ public class EmailSender {
 
 		props.put("mail.smtp.password", PASSWORD);
 
-		props.put("mail.smtp.port", "25");
+		props.put("mail.smtp.port", PORT);
 
 		props.put("mail.smtp.auth", "true");
 		
@@ -50,11 +52,9 @@ public class EmailSender {
 			
 			message.setSubject(subject);
 
-			message.setText(body);
-
-			BodyPart objMessageBodyPart = new MimeBodyPart();
-
-			objMessageBodyPart.setText("Please Find The Attached Report File!");
+			BodyPart objMessageBodyPart = new MimeBodyPart();			
+			
+			objMessageBodyPart.setContent(body, "text/html; charset=utf-8");
 
 			Multipart multipart = new MimeMultipart();
 
@@ -62,6 +62,16 @@ public class EmailSender {
 
 			objMessageBodyPart = new MimeBodyPart();
 
+			String screenshot = System.getProperty("user.dir")+"\\src\\utility\\screenshot.png";
+			
+			DataSource source = new FileDataSource(screenshot);
+
+			objMessageBodyPart.setDataHandler(new DataHandler(source));
+
+			objMessageBodyPart.setFileName("screenshot.png");
+			
+			multipart.addBodyPart(objMessageBodyPart);
+			
 			message.setContent(multipart);
 
 			Transport transport = session.getTransport("smtp");

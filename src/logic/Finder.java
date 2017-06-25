@@ -2,12 +2,16 @@ package logic;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,6 +24,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import org.apache.commons.io.FileUtils;
+
 import pages.airlines.Ryanair;
 import pages.airlines.Wizzair;
 import utility.ExcelUtils;
@@ -29,6 +35,7 @@ import utility.TestReporter;
 public class Finder {
 	WebDriver driver;
 	private static final String CHROME_DRIVER = System.getProperty("user.dir")+"//src//utility//chromedriver.exe";
+	File file;
 	
 	
 	@BeforeTest
@@ -39,7 +46,7 @@ public class Finder {
 	
 	@Test
 	@Parameters({"from", "to", "priceLimit"})
-	public void findFlight(String from, String to, int priceLimit) throws InterruptedException, IOException{
+	public void findFlight(String from, String to, int priceLimit) throws Exception{
 		int price;
 		WebElement searchButton;
 		WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -84,13 +91,17 @@ public class Finder {
 					
 					price = ryanair.getPrice();
 					
+					takeScreenshot();
+					
 					for(int i = 0; i < months.size(); i++){					
 						WebElement month = months.get(i);
 						month.click();
 						
-						driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+						Thread.sleep(1500);
 						
 						if(price > ryanair.getPrice()){
+							file.delete();
+							takeScreenshot();
 							price = ryanair.getPrice();
 						}
 					}					
@@ -117,6 +128,8 @@ public class Finder {
 					
 					price = wizzair.getPrice();
 					
+					takeScreenshot();
+					
 					months = driver.findElements(wizzair.getMonthsFromSelectbox());
 					
 					for(int i=0; i<months.size(); i++){
@@ -127,6 +140,8 @@ public class Finder {
 						month.click();
 						
 						if(price > wizzair.getPrice()){
+							file.delete();
+							takeScreenshot();
 							price = wizzair.getPrice();
 						}
 					}
@@ -151,9 +166,9 @@ public class Finder {
 	 */
 	private boolean controlPrice(int price, int limit){
 		if(price<=limit){
-			return false;
-		} else {
 			return true;
+		} else {
+			return false;
 		}				
 	}
 	
@@ -171,8 +186,23 @@ public class Finder {
 		return airlines;
 	}
 	
+	/**
+	 * Method for taking screenshot.
+	 */
+	private void takeScreenshot() throws Exception{
+		TakesScreenshot screenshot = (TakesScreenshot)driver;
+		String filePath = System.getProperty("user.dir")+"\\src\\utility\\screenshot.png";
+		
+		File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+		
+		file = new File(filePath);
+		
+		FileUtils.copyFile(sourceFile,file);
+	}
+	
 	@AfterTest
 	public void teardown(){
+		file.delete();
 		driver.close();
 	}
 	  
