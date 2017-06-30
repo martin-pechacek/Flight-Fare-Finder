@@ -14,7 +14,7 @@ public class PragueAirport extends Destinations {
 	/**
 	 * Class constructor
 	 * 
-	 * @param driver
+	 * @param driver - WebDriver
 	 */
 	public PragueAirport(WebDriver driver) {
 		super(driver);
@@ -50,7 +50,7 @@ public class PragueAirport extends Destinations {
 	/**
 	 * Method that provides name of airport
 	 * 
-	 * @return airport
+	 * @return airport - Name of airport
 	 */
 	public String getAirport(){
 		return airport;
@@ -59,7 +59,7 @@ public class PragueAirport extends Destinations {
 	/**
 	 * Method that provides link of airport web page where are all possible destinations 
 	 * 
-	 * @return link
+	 * @return link - Link of airport web page where are all possible destinations 
 	 */
 	public String getWebpage(){
 		return link;

@@ -7,7 +7,6 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
@@ -21,7 +20,8 @@ import utility.ExcelUtils;
 
 public class FlightsCZ {
 	WebDriver driver;
-	private static final String CHROME_DRIVER = System.getProperty("user.dir")+"//src//utility//chromedriver.exe";
+	private static final String CHROME_DRIVER_WIN = "src//utility//chromedriver.exe";
+	private static final String CHROME_DRIVER_UNIX = "src//utility//chromedriver";
 	private PragueAirport destinationsPrague;
 	private BrnoAirport destinationsBrno;
 	private OstravaAirport destinationsOstrava;
@@ -29,18 +29,29 @@ public class FlightsCZ {
 	List<WebElement> possibleCountries = new ArrayList<>();
 	List<WebElement> possibleAirlines = new ArrayList<>();
 	
-	
-	  @BeforeTest
-	  public void setup(){
-			System.setProperty("webdriver.chrome.driver", CHROME_DRIVER);
-			driver = new ChromeDriver();
+	/**
+	 * Test that runs after testNG is initialized and 
+	 * sets WebDriver for Windows and Linux. 
+	 */
+	@BeforeTest
+	public void setup(){
+		String system = System.getProperty("os.name");
+		if(system.toLowerCase().contains("windows")){
+	    	System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_WIN);
+	    } else {
+	    	System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_UNIX);
+	    }
+	  			
+		driver = new ChromeDriver();
 	  }
 	  
 	  /**
-	   * Method that provides link with all destinations of chosen airport
+	   * Method that provides link with all 
+	   * destinations of chosen airport
 	   * 
-	   * @param IATACode
-	   * @return link
+	   * @param IATACode - IATA code of airport
+	   * @return link -  webpage link where is possiblity
+	   * to get all existing possible flights from airport 
 	   */
 	  public String getLink(String IATACode){
 		  String link = "";
@@ -63,7 +74,8 @@ public class FlightsCZ {
 	  
 	  /**
 	   * Test method which loads all possible destinations, countries and airlines
-	   * from Prague airport and save it in the excel file 
+	   * from Prague airport and saves it in the excel file 
+	   * 
 	   * @throws Exception 
 	   */
 	  @Test(priority = 0)
@@ -81,7 +93,8 @@ public class FlightsCZ {
 	  
 	  /**
 	   * Test method which loads all possible destinations, countries and airlines
-	   * from Brno airport and save it in the excel file 
+	   * from Brno airport and saves it in the excel file 
+	   * 
 	   * @throws Exception 
 	   */
 	  @Test(priority = 1)
@@ -116,7 +129,8 @@ public class FlightsCZ {
 	  
 	  /**
 	   * Test method which loads all possible destinations, countries and airlines
-	   * from Ostrava airport and save it in the excel file 
+	   * from Ostrava airport and saves it in the excel file 
+	   * 
 	   * @throws Exception 
 	   */
 	  @Test(priority = 2)
@@ -155,13 +169,15 @@ public class FlightsCZ {
 	  }
 	  
 	  /**
-	   * Method for sorting flights in the list.
+	   * Method for adding all destination and airlines in one list. Duplicates are dropped
+	   * 
 	   * Used in case when airport doesn't provide
 	   * information about all possible flights on one page.
 	   * 
-	   * Sorted flights in the list are in 
-	   * structure - every odd - destination, every even - airline
-	   * used ordinary flight search. e.g. Brno 
+	   * @param destinations - List containing all destinations from one airport
+	   * @param airlines - List containing all airlines from one airport
+	   * @return sortedFlights - List containing destinations (every odd) and airlines (every even)
+	   * without duplicates
 	   */
 	 private List<WebElement> sortFlights(List<WebElement> destinations, List<WebElement> airlines){
 		 List<WebElement> sortedFlights = new ArrayList<>();
@@ -185,7 +201,12 @@ public class FlightsCZ {
 	   * in the excel file
 	   * 
 	   * Excel file structure: departure airport|city of arrival|country of arrival|airline
-	   *  
+	   * 
+	   * @param originCity - City of departure
+	   * @param destinations - List of arrival cities
+	   * @param countries - List of Country of arrival
+	   * @param airlines - List of airline providing flight
+	   * 
 	   * @throws Exception
 	   */
 	  public void saveFlight(String originCity, List<WebElement> destinations, List<WebElement> countries, List<WebElement> airlines) throws Exception{				  		  
@@ -219,11 +240,11 @@ public class FlightsCZ {
 	 * in the excel file
 	 * Excel file structure: departure airport|city of arrival|country of arrival|airline
 	 * 
-	 * @param airport
-	 * @param destinations
-	 * @param countries
-	 * @param airlines
-	 * @param ostravaAirlines
+	 * @param originCity - City of departure
+	 * @param destinations - List of arrival cities
+	 * @param countries - List of Country of arrival
+	 * @param airlines - List of airline providing flight
+	 * @param ostravaAirlines - HashMap of airlines flying from Ostrava
 	 * @throws Exception
 	 */
 	  public void saveFlight(String originCity, List<WebElement> destinations, List<WebElement> countries, List<WebElement> airlines, HashMap<String, String> ostravaAirlines) throws Exception{				  		  
@@ -247,6 +268,9 @@ public class FlightsCZ {
 		  airlines.clear();
 	  }
 	  
+	  /**
+	   * Method which runs when test ends and closes driver
+	   */
 	  @AfterTest
 	  public void teardown(){
 		  driver.close();

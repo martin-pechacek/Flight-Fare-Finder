@@ -18,13 +18,20 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class EmailSender {
-
+	
 	private static String FROM = "EMAIL_ADDRESS_FOR_SENDING_EMAILS";
 	private static String PASSWORD = "EMAIL_PASSWORD";
 	private static String TO = "EMAIL RECEIVER";
 	private static String HOST = "SMTP_SERVER";
 	private static String PORT = "SMTP_PORT";
 	
+	/**
+	 * Method for sending email. Email contains (in attachment) screenshot of 
+	 * web page with lowest price
+	 * 
+	 * @param subject - Email subject
+	 * @param body - Email message
+	 */
 	public static void sendEmail(String subject, String body){
 		Properties props = System.getProperties();
 		

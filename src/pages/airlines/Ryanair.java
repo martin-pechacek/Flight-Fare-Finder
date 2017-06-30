@@ -1,17 +1,10 @@
 package pages.airlines;
 
-import java.text.DateFormat;
-import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.text.DateFormatter;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import net.sf.cglib.core.Local;
 
 public class Ryanair {
 	private String link = "https://www.ryanair.com/gb/en/cheap-flight-destinations";
@@ -26,7 +19,7 @@ public class Ryanair {
 	/**
 	 * Class constructor
 	 * 
-	 * @param driver
+	 * @param driver - WebDriver
 	 */
 	public Ryanair(WebDriver driver){
 		this.driver = driver;
@@ -35,7 +28,7 @@ public class Ryanair {
 	/**
 	 * Method providing link of airline web page
 	 * 
-	 * @return link
+	 * @return link - Airline web page with form for finding flight
 	 */
 	public String getWebpage(){
 		return link;
@@ -45,7 +38,8 @@ public class Ryanair {
 	/**
 	 * Method providing xpath of input field for origin city
 	 * 
-	 * @return fromInput
+	 * @return fromInput - Xpath of input field for departure
+	 * city in form for finding flights
 	 */
 	public By getFromInputXpath(){
 		return fromInput;
@@ -54,43 +48,36 @@ public class Ryanair {
 	/**
 	 * Method providing xpath of input field for destination city
 	 * 
-	 * @return toInput
+	 * @return toInput - Xpath of input field for arrival
+	 * city in form for finding flights
 	 */
 	public By getToInputXpath(){
 		return toInput;
 	}
 	
 	/**
-	 * Method providing xpath of first day of next month in date picker
+	 * Method providing xpath of link submitting form for finding flight
 	 * 
-	 * @return nextMonth
-	 */
-	public By getNextMonth(){
-		return nextMonth;
-	}
-	
-	/**
-	 * Method providing xpath of search button
-	 * 
-	 * @return nextMonth
+	 * @return allResults - Xpath of link submitting form for finding flight
 	 */
 	public By getAllResults(){
 		return allResults;
 	}
 
 	/**
-	 * Method providing xpath of months
+	 * Method providing xpath of months clickable component 
+	 * on page with found flight
 	 * 
-	 * @return months
+	 * @return months - Xpath of months clickable component
 	 */
 	 public By getMonths(){
 	 	return months;
 	 }
 	 
 	 /**
-	  * Method providing xpath of price label
+	  * Method providing xpath of flight price label
 	  * 
-	  * @return priceLabel
+	  * @return priceLabel - Xpath of flight price label
 	  */
 	 public By getPriceLabelXpath(){
 		 return priceLabel;
@@ -99,7 +86,7 @@ public class Ryanair {
 	 /**
 	  * Method providing lowest flight fare in month
 	  * 
-	  * @return price
+	  * @return price - Lower flight fare in the month
 	  */
 	 public int getPrice(){		  
 		 int price;		
@@ -107,30 +94,17 @@ public class Ryanair {
 			
 		 
 		 WebElement priceElement = driver.findElement(priceLabel);
-		 String priceLabel = priceElement.getText().replaceAll(",", "").substring(3);
 		 
-		 price = Integer.parseInt(priceLabel); 
+		 String priceText = priceElement.getText();
+		 
+		 //control if flights exists. If not set price 1000000
+		 if(!priceText.equalsIgnoreCase("")){
+			 String priceLabel = priceElement.getText().replaceAll(",", "").substring(3);			 
+			 price = Integer.parseInt(priceLabel);  
+		 } else {
+			 price = 1000000;
+		 }
 		 		 
 		 return price;
 	 }
-	
-	/**
-	 * Method providing xpath of flight price
-	 * 
-	 */
-	/*public String getFlightPrice(String destination){
-		String circleXpath = "//div[@class='circle']";
-		int count = driver.findElements(By.xpath(circleXpath)).size();
-		String capitalizedDestination = destination.substring(0, 1).toUpperCase() + destination.substring(1);
-		
-		WebElement circle = driver.findElement(By.xpath(circleXpath+"["+ count +"]")); 
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
-		executor.executeScript("arguments[0].click()", circle);
-		
-		By priceXpath = By.xpath("//div[p[text()[contains(.,'"+capitalizedDestination+"')]]]/following-sibling::div/span/span[2]");
-		
-		String price = driver.findElement(priceXpath).getAttribute("innerHTML");
-		
-		return price;
-	}*/
 }

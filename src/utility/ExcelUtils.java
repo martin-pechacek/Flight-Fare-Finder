@@ -1,7 +1,5 @@
 package utility;
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import utility.City;
 
 import java.io.File;
@@ -9,11 +7,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelUtils {
 	private static final String EXCEL_PATH = System.getProperty("user.dir")+"//src//data//flights.xlsx";
@@ -62,11 +60,12 @@ public class ExcelUtils {
 	}
 	
 	/**
-	 * Method reading in excel file and adding airline depending on origin city and destination
+	 * Method for reading in excel file and adding airline depending on origin city and destination
 	 * in the ArrayList<String>
 	 * 
-	 * @param originCity
-	 * @return airlines
+	 * @param originCity - City of departure
+	 * @param destination - City of arrival
+	 * @return airlines - airline flying between cities
 	 * @throws IOException
 	 */
 	public static ArrayList<String> readAirlines(String originCity, String destination) throws IOException{

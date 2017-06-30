@@ -2,19 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="fLIGHTS finder" verbose="2" thread-count="3" parallel="none">
   
+  <!-- Example suite -->
+  
   <test name="Ostrava -> Milan" >
 	  <parameter name="from" value="Ostrava"/>
 	  <parameter name="to" value="Milan"/>
-	  <parameter name="priceLimit" value="200"/>
-	  <classes>
-	      <class name="logic.Finder"/>
-	  </classes>
-  </test>
-  
-    <test name="Prague -> Milan" >
-	  <parameter name="from" value="Prague"/>
-	  <parameter name="to" value="Milan"/>
-	  <parameter name="priceLimit" value="250"/>
+	  <parameter name="priceLimit" value="500"/>
 	  <classes>
 	      <class name="logic.Finder"/>
 	  </classes>

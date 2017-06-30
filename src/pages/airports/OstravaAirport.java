@@ -19,6 +19,11 @@ public class OstravaAirport extends Destinations {
 	By Destination = By.xpath("//*[@id='tab-1']/table/tbody/tr/td[5]");
 	HashMap<String, String> airlines = new HashMap<String, String>();
 	
+	/**
+	 * Class constructor
+	 * 
+	 * @param driver - WebElement
+	 */
 	public OstravaAirport(WebDriver driver){
 		super(driver);
 	}
@@ -26,7 +31,7 @@ public class OstravaAirport extends Destinations {
 	/**
 	 * Method that provides link of airport web page where are all possible destinations 
 	 * 
-	 * @return link
+	 * @return link - Link of airport web page where are all possible destinations 
 	 */
 	public String getWebpage(){
 		return link;
@@ -34,17 +39,19 @@ public class OstravaAirport extends Destinations {
 	
 	/**
 	 * Method providing xpath of departures radio button
+	 * in the form for finding flights
 	 * 
-	 * @return departures
+	 * @return departures - Xpath of departures radio button
 	 */
 	public By getDeparturesXpath(){
 		return DeparturesRadioButton;
 	}
 	
 	/**
-	 * Method providing xpath of Interval selectbox
+	 * Method providing xpath of Interval selectbox in the form
+	 * for finding flights
 	 * 
-	 * @return IntervalSelectbox
+	 * @return IntervalSelectbox - Xpath of interval selectbox
 	 */
 	public By getIntervalSelectboxXpath(){
 		return IntervalSelectbox;
@@ -53,16 +60,17 @@ public class OstravaAirport extends Destinations {
 	/**
 	 * Method providing xpath of Interval +1 Month from chosen day in selectbox
 	 * 
-	 * @return Interval1Month
+	 * @return Interval1Month - Xpath of Interval +1 Month from chosen day in selectbox
 	 */
 	public By getInterval1MonthXpath(){
 		return Interval1Month;
 	}
 	
 	/**
-	 * Method providing xpath of search button
+	 * Method providing xpath of search button in the form 
+	 * for finding flights
 	 * 
-	 * @return SearchButton
+	 * @return SearchButton - Xpath of search button
 	 */
 	public By getSearchButtonXpath(){
 		return SearchButton;
@@ -71,7 +79,7 @@ public class OstravaAirport extends Destinations {
 	/**
 	 * Method providing xpath of airline in search result
 	 * 
-	 * @return SearchButton
+	 * @return SearchButton - Xpath of airline in search result
 	 */
 	public By getAirlineXpath(){
 		return Airline;
@@ -80,18 +88,19 @@ public class OstravaAirport extends Destinations {
 	/**
 	 * Method providing xpath of destination in search result
 	 * 
-	 * @return SearchButton
+	 * @return SearchButton - Xpath of destination in search result
 	 */
 	public By getDestinationXpath(){
 		return Destination;
 	}
 	
 	/**
-	 * Method providing hashmap with airlines
+	 * Method providing Hash Map with airlines
 	 * key = airline code, value = airline name 
 	 * 
-	 * @param driver
-	 * @return HastMap<String, String> airlines
+	 * @param driver - WebDriver
+	 * @return HastMap<String, String> airlines - Hash Map of airlines flying from Ostrava
+	 * Key = Code of airline, Value = Name of airline
 	 */
 	public HashMap<String, String> getAirlines(WebDriver driver){
 		List<WebElement> airlinesList = driver.findElements(By.xpath("//*[@id='obsah']/div[1]/div[5]/div/div[1]/div/table/tbody/tr"));

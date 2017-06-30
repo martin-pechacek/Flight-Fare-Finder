@@ -16,25 +16,27 @@ public class BrnoAirport extends Destinations{
 	/**
 	 * Class constructor
 	 * 
-	 * @param driver
+	 * @param driver - WebDriver
 	 */
 	public BrnoAirport(WebDriver driver){
 		super(driver);
 	}
 	
 	/**
-	 * Method providing xpath of arrival checkbox
+	 * Method providing xpath of arrival checkbox in the
+	 * form for finding flights
 	 * 
-	 * @return arrivals
+	 * @return arrivals - Xpath of arrival checkbox
 	 */
 	public By getArrivalsXpath(){
 		return Arrivals;
 	}
 	
 	/**
-	 * Method providing xpath of search button
+	 * Method providing xpath of search button in the
+	 * form for finding flights
 	 * 
-	 * @return SearchButton
+	 * @return SearchButton - Xpath of search button
 	 */
 	public By getSearchButtonXpath(){
 		return SearchButton;
@@ -43,7 +45,7 @@ public class BrnoAirport extends Destinations{
 	/**
 	 * Method providing xpath of Interval +1 Month from chosen day in selectbox
 	 * 
-	 * @return Interval1Month
+	 * @return Interval1Month - Xpath of Interval +1 Month from chosen day in selectbox
 	 */
 	public By getInterval1MonthXpath(){
 		return Interval1Month;
@@ -52,7 +54,7 @@ public class BrnoAirport extends Destinations{
 	/**
 	 * Method providing xpath of destinations
 	 * 
-	 * @return Destinations
+	 * @return Destinations - Xpath of destinations
 	 */
 	public By getDestinationsXpath(){
 		return Destinations;
@@ -61,7 +63,7 @@ public class BrnoAirport extends Destinations{
 	/**
 	 * Method providing xpath of airlines
 	 * 
-	 * @return Destinations
+	 * @return Destinations - Xpath of airlines
 	 */
 	public By getAirlinesXpath(){
 		return Airlines;
@@ -70,7 +72,7 @@ public class BrnoAirport extends Destinations{
 	/**
 	 * Method that provides link of airport web page where are all possible destinations 
 	 * 
-	 * @return link
+	 * @return link - Link of airport web page where are all possible destinations 
 	 */
 	public String getWebpage(){
 		return link;

@@ -16,6 +16,11 @@ public class Wizzair {
 	By monthsFromOriginSelectbox = By.xpath("//*[@id='app']/div[3]/div/main/div/div/div[2]/div[2]/div[1]/div[1]/div/select/option");
 	By loader = By.xpath("//div[@class='fare-finder__calendar box loader-combined']");
 	
+	/**
+	 * Class constructor
+	 * 
+	 * @param driver - WebDriver
+	 */
 	public Wizzair(WebDriver driver){
 		this.driver = driver;
 	}
@@ -23,25 +28,27 @@ public class Wizzair {
 	/**
 	 * Method providing link of airline web page
 	 * 
-	 * @return link
+	 * @return link - Airline web page with form for finding flight
 	 */
 	public String getWebpage(){
 		return link;
 	}
 	
 	/**
-	 * Method providing id of origin input
+	 * Method providing id of departure input field
+	 * in the form for finding flights
 	 * 
-	 * @return originInput
+	 * @return originInput - Id of departure input field
 	 */
 	public By getOriginInput(){
 		return originInput;
 	}
 	
 	/**
-	 * Method providing id of destination input
+	 * Method providing id of destination input field
+	 * in the form for finding flights
 	 * 
-	 * @return destinationInput
+	 * @return destinationInput - Id of destination input field
 	 */
 	public By getDestinationInput(){
 		return destinationInput;
@@ -49,17 +56,19 @@ public class Wizzair {
 	
 	/**
 	 * Method providing css selector of search button
+	 * in the form for finding flights
 	 * 
-	 * @return searchButton
+	 * @return searchButton - Css selector of search button
 	 */
 	public By getSearchButton(){
 		return searchButton;
 	}
 	
 	/**
-	 * Method that returns price. If flights are not planned yet, method will set price 1 000 000
+	 * Method returning price. 
+	 * If flights are not planned yet, method will set price 1 000 000
 	 * 
-	 * @return price
+	 * @return price - Found lowest price in the month
 	 */
 	public int getPrice(){
 		boolean isPriceDisplayed = driver.findElements(priceSelectorFromOrigin).size() > 0;
@@ -80,16 +89,16 @@ public class Wizzair {
 	/**
 	 * Method providing xpath of selectbox with months
 	 * 
-	 * @return monthSelectbox
+	 * @return monthSelectbox - Xpath of selectbox with months
 	 */
-	public By getMonthSelectbox(){
+		public By getMonthSelectbox(){
 		return monthSelectboxFromOrigin;
 	}
 	
 	/**
 	 * Method providing xpath of month in selectbox
 	 * 
-	 * @return months
+	 * @return months - Xpath of month in selectbox
 	 */
 	public By getMonthsFromSelectbox(){
 		return monthsFromOriginSelectbox;
@@ -98,7 +107,7 @@ public class Wizzair {
 	/**
 	 * Method providing xpath of loading icon
 	 * 
-	 * @return loader
+	 * @return loader - Xpath of loading icon
 	 */
 	public By getLoader(){
 		return loader;
