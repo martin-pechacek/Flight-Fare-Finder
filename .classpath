@@ -50,5 +50,6 @@
 	<classpathentry kind="lib" path="C:/Selenium/POI/lib/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="C:/Selenium/POI/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="C:/Selenium/selenium-java-3.3.1/client-combined-3.3.1-nodeps.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Martin/workspace/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

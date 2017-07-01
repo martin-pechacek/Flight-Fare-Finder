@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="fLIGHTS finder" verbose="2" thread-count="3" parallel="none">
+  
+  <!-- Example suite -->
+  
+  <test name="Ostrava -> Milan" >
+	  <parameter name="from" value="Ostrava"/>
+	  <parameter name="to" value="Milan"/>
+	  <parameter name="priceLimit" value="500"/>
+	  <classes>
+	      <class name="logic.Finder"/>
+	  </classes>
+  </test>
+  
+</suite> <!-- Default suite -->
