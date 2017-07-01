@@ -29,27 +29,32 @@ Application built on [Selenium WebDriver](http://www.seleniumhq.org/) for findin
 - Download and set (Maven for Windows)[https://www.mkyong.com/maven/how-to-install-maven-in-windows/]
 
 ## Usage
-1. Run Flights Loader to get all flights in the excel file
+1. Run Flights Loader to save all flights in the excel file
 ```{r, engine='sh'}
 run cmd
 navigate to project
 mvn clean test -Ploader
 ```
 2. Choose flight you want
+
 3. Open(eg. in notepad) FlightsFinder.xml and change example suite attributes
 - test name = Name of suite
 - set value for parametr from = city you want to flight from
 - set value for parametr to = city you want to flight to
 - set value for parametr priceLimit = your price limit for flight fare
+
 4. If you want add more flights, copy test suite, paste it under last suite and change attributes
+
 5. Open(eg. in notepad) EmailSender.java (src/utility) and edit following lines:
 - line 40: set SMTP server for sending e-mails
 - line 42: set e-mail address for sending e-mails
 - line 44: set password for e-mail
 - line 46: set SMTP port
+
 6. Open(eg. notepad) TestReporter.java(src/utility) and edit following lines:
 - line 19: set e-mail subject
 - line 20: set e-mail message. HTML allowed
+
 7. Run Flights Finder
 ```{r, engine='sh'}
 run cmd
