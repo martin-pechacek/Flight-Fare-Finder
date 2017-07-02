@@ -43,7 +43,7 @@ mvn clean test -Ploader
   - set value for parametr to = city you want to flight to
   - set value for parametr priceLimit = your price limit for flight fare
 
-**4. If you want add more flights, copy test suite, paste it under last suite and change attributes**
+**4. If you want add more flights, copy test and paste it under last one**
 
 **5. Open(eg. in notepad) EmailSender.java (src/utility) and edit following lines:**
   - line 40: set SMTP server for sending e-mails
