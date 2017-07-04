@@ -26,7 +26,7 @@ Application built on [Selenium WebDriver](http://www.seleniumhq.org/) for findin
 - Download Maven plugin - [Follow instructions](http://toolsqa.com/java/maven/how-to-install-maven-eclipse-ide/)
 
 ### Prerequisities for running tests from command line
-- Download and set (Maven for Windows)[https://www.mkyong.com/maven/how-to-install-maven-in-windows/]
+- Download and set [Maven for Windows](https://www.mkyong.com/maven/how-to-install-maven-in-windows/)
 
 ## Usage
 **1. Run Flights Loader to save all flights in the excel file**
@@ -38,7 +38,7 @@ mvn clean test -Ploader
 **2. Choose flight you want**
 
 **3. Open(eg. in notepad) FlightsFinder.xml and change example suite attributes**
-  - test name = Name of suite
+  - test name = name of test
   - set value for parametr from = city you want to flight from
   - set value for parametr to = city you want to flight to
   - set value for parametr priceLimit = your price limit for flight fare
