@@ -32,7 +32,7 @@ Application built on [Selenium WebDriver](http://www.seleniumhq.org/) for findin
 **1. Run Flights Loader to save all flights in the excel file**
 ```{r, engine='sh'}
 run cmd
-navigate to project
+navigate to project folder
 mvn clean test -Ploader
 ```
 **2. Choose flight you want**
@@ -58,7 +58,7 @@ mvn clean test -Ploader
 **7. Run Flights Finder**
 ```{r, engine='sh'}
 run cmd
-navigate to project
+navigate to project folder
 mvn clean test -Pfinder
 ```
 
