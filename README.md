@@ -26,7 +26,7 @@ Application built on [Selenium WebDriver](http://www.seleniumhq.org/) for findin
 - Download Maven plugin - [Follow instructions](http://toolsqa.com/java/maven/how-to-install-maven-eclipse-ide/)
 
 ### Prerequisities for running tests from command line
-- Download and set [Maven for Windows](https://www.mkyong.com/maven/how-to-install-maven-in-windows/)
+- Download and set [Maven](https://www.mkyong.com/maven/how-to-install-maven-in-windows/)
 
 ## Usage
 **1. Run Flights Loader to save all flights in the excel file**
