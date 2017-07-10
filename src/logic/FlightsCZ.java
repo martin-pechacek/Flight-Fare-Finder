@@ -21,27 +21,33 @@ import utility.ExcelUtils;
 public class FlightsCZ {
 	WebDriver driver;
 	private static final String CHROME_DRIVER_WIN = "src//utility//chromedriver.exe";
-	private static final String CHROME_DRIVER_UNIX = "src//utility//chromedriver";
+	private static final String CHROME_DRIVER_LINUX = "//usr//local//bin//chromedriver";
 	private PragueAirport destinationsPrague;
 	private BrnoAirport destinationsBrno;
 	private OstravaAirport destinationsOstrava;
 	List<WebElement> possibleDestinations = new ArrayList<>();
 	List<WebElement> possibleCountries = new ArrayList<>();
 	List<WebElement> possibleAirlines = new ArrayList<>();
+	ExcelUtils excel;
 	
 	/**
 	 * Test that runs after testNG is initialized and 
 	 * sets WebDriver for Windows and Linux. 
+	 * @throws Exception 
 	 */
 	@BeforeTest
-	public void setup(){
+	public void setup() throws Exception{		
 		String system = System.getProperty("os.name");
 		if(system.toLowerCase().contains("windows")){
 	    	System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_WIN);
 	    } else {
-	    	System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_UNIX);
+	    	System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_LINUX);
 	    }
-	  			
+		
+		//one of those cities - Prague/Brno/Ostrava
+		String city = "Prague";
+		ExcelUtils.deleteData(city);
+		
 		driver = new ChromeDriver();
 	  }
 	  
@@ -51,7 +57,7 @@ public class FlightsCZ {
 	   * 
 	   * @param IATACode - IATA code of airport
 	   * @return link -  webpage link where is possiblity
-	   * to get all existing possible flights from airport 
+	   * to get all existing flights from airport 
 	   */
 	  public String getLink(String IATACode){
 		  String link = "";
@@ -259,7 +265,7 @@ public class FlightsCZ {
 			  for(String airlineString : airlinesString){
  				  airline = (String) ostravaAirlines.get(airlineString.substring(0, 2));
 				  String[] toWrite = {originCity, destination, country, airline};
-				  ExcelUtils.writeData(toWrite);
+				  excel.writeData(toWrite);
 			  }
   		  }
 		  
@@ -269,7 +275,7 @@ public class FlightsCZ {
 	  }
 	  
 	  /**
-	   * Method which runs when test ends and closes driver
+	   * Method which closes driver when test ends
 	   */
 	  @AfterTest
 	  public void teardown(){

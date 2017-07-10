@@ -23,11 +23,12 @@ public class ExcelUtils {
 	 * @throws Exception
 	 */
 	public static void writeData(String[] value) throws Exception {
-		try {
+		try {	
+			String originCity = value[0];
 			
 			File file = new File(EXCEL_PATH);
 			
-			City city = new City(value[0]);
+			City city = new City(originCity);
 			
 			FileInputStream inputStream = new FileInputStream(file);
 			
@@ -35,7 +36,7 @@ public class ExcelUtils {
 			
 			Sheet excelSheet = excelBook.getSheet(city.getCountry());
 						
-			int rowCount = excelSheet.getLastRowNum() - excelSheet.getFirstRowNum();
+			int rowCount = excelSheet.getLastRowNum() - excelSheet.getFirstRowNum();			
 			
 			Row row = excelSheet.getRow(0);
 			
@@ -80,7 +81,7 @@ public class ExcelUtils {
 		XSSFWorkbook excelBook = new XSSFWorkbook(inputStream);
 		
 		Sheet excelSheet = excelBook.getSheet(city.getCountry());
-		
+					
 		int rowCount = excelSheet.getLastRowNum() - excelSheet.getFirstRowNum();
 		
 	    for (int i = 0; i < rowCount+1; i++) {
@@ -96,5 +97,45 @@ public class ExcelUtils {
 	    excelBook.close();
 	    
 	    return airlines;
+	}
+	
+	/**
+	 * Method for deleting excel sheet data.  
+	 * 
+	 * @param originCity - City for determination which sheet will be deleted
+	 * @throws Exception
+	 */
+	public static void deleteData(String originCity) throws Exception{	
+		try{
+			File file = new File(EXCEL_PATH);
+			
+			City city = new City(originCity);
+			
+			FileInputStream inputStream = new FileInputStream(file);
+			
+			XSSFWorkbook excelBook = new XSSFWorkbook(inputStream);
+			
+			Sheet excelSheet = excelBook.getSheet(city.getCountry());
+						
+			int rowCount = excelSheet.getLastRowNum() - excelSheet.getFirstRowNum();
+			
+			if(rowCount>1){					
+				for(int i = 1; i<=rowCount; i++){
+					Row row = excelSheet.getRow(i);
+					excelSheet.removeRow(row);
+				}
+				
+				inputStream.close();
+				
+				FileOutputStream outputStream = new FileOutputStream(file);
+				
+				excelBook.write(outputStream);
+				excelBook.close();
+
+				outputStream.close();
+			}
+		} catch(Exception ex) {
+			throw(ex);
+		}
 	}
 }
