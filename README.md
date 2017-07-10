@@ -26,24 +26,24 @@ Application built on [Selenium WebDriver](http://www.seleniumhq.org/) for findin
 - Download Maven plugin - [Follow instructions](http://toolsqa.com/java/maven/how-to-install-maven-eclipse-ide/)
 
 ### Prerequisities for running tests from command line
-- Download and set (Maven for Windows)[https://www.mkyong.com/maven/how-to-install-maven-in-windows/]
+- Download and set [Maven](https://www.mkyong.com/maven/how-to-install-maven-in-windows/)
 
 ## Usage
 **1. Run Flights Loader to save all flights in the excel file**
 ```{r, engine='sh'}
 run cmd
-navigate to project
+navigate to project folder
 mvn clean test -Ploader
 ```
 **2. Choose flight you want**
 
 **3. Open(eg. in notepad) FlightsFinder.xml and change example suite attributes**
-  - test name = Name of suite
+  - test name = name of test
   - set value for parametr from = city you want to flight from
   - set value for parametr to = city you want to flight to
   - set value for parametr priceLimit = your price limit for flight fare
 
-**4. If you want add more flights, copy test and paste it under last one**
+**4. If you want add flight, copy test, paste it under last one and set attributes**
 
 **5. Open(eg. in notepad) EmailSender.java (src/utility) and edit following lines:**
   - line 40: set SMTP server for sending e-mails
@@ -58,7 +58,7 @@ mvn clean test -Ploader
 **7. Run Flights Finder**
 ```{r, engine='sh'}
 run cmd
-navigate to project
+navigate to project folder
 mvn clean test -Pfinder
 ```
 

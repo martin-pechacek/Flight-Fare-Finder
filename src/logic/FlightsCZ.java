@@ -21,14 +21,13 @@ import utility.ExcelUtils;
 public class FlightsCZ {
 	WebDriver driver;
 	private static final String CHROME_DRIVER_WIN = "src//utility//chromedriver.exe";
-	private static final String CHROME_DRIVER_LINUX = "src//utility//chromedriver";
+	private static final String CHROME_DRIVER_LINUX = "//usr//local//bin//chromedriver";
 	private PragueAirport destinationsPrague;
 	private BrnoAirport destinationsBrno;
 	private OstravaAirport destinationsOstrava;
 	List<WebElement> possibleDestinations = new ArrayList<>();
 	List<WebElement> possibleCountries = new ArrayList<>();
 	List<WebElement> possibleAirlines = new ArrayList<>();
-	ExcelUtils excel;
 	
 	/**
 	 * Test that runs after testNG is initialized and 
@@ -265,7 +264,7 @@ public class FlightsCZ {
 			  for(String airlineString : airlinesString){
  				  airline = (String) ostravaAirlines.get(airlineString.substring(0, 2));
 				  String[] toWrite = {originCity, destination, country, airline};
-				  excel.writeData(toWrite);
+				  ExcelUtils.writeData(toWrite);
 			  }
   		  }
 		  
