@@ -21,7 +21,7 @@ import utility.ExcelUtils;
 public class FlightsCZ {
 	WebDriver driver;
 	private static final String CHROME_DRIVER_WIN = "src//utility//chromedriver.exe";
-	private static final String CHROME_DRIVER_LINUX = "src//utility//chromedriver";
+	private static final String CHROME_DRIVER_LINUX = "//usr//local//bin//chromedriver";
 	private PragueAirport destinationsPrague;
 	private BrnoAirport destinationsBrno;
 	private OstravaAirport destinationsOstrava;
