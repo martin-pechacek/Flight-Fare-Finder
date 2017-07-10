@@ -28,7 +28,6 @@ public class FlightsCZ {
 	List<WebElement> possibleDestinations = new ArrayList<>();
 	List<WebElement> possibleCountries = new ArrayList<>();
 	List<WebElement> possibleAirlines = new ArrayList<>();
-	ExcelUtils excel;
 	
 	/**
 	 * Test that runs after testNG is initialized and 
