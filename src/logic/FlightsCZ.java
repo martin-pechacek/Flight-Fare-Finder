@@ -264,7 +264,7 @@ public class FlightsCZ {
 			  for(String airlineString : airlinesString){
  				  airline = (String) ostravaAirlines.get(airlineString.substring(0, 2));
 				  String[] toWrite = {originCity, destination, country, airline};
-				  excel.writeData(toWrite);
+				  ExcelUtils.writeData(toWrite);
 			  }
   		  }
 		  
